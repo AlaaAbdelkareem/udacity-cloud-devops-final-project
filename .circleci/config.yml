@@ -104,8 +104,6 @@ jobs:
       - run:
           name: Scan front-end
           command: |
-            cd frontend
-            npm i oauth-sign
             npm audit
 
 #   scan-backend:
