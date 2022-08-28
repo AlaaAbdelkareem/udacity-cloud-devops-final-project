@@ -45,7 +45,7 @@ jobs:
           command: |
             ls
             pwd
-            cd front-end
+            cd frontend
             npm run build:prod
             # # Your code here
             # exit 1
