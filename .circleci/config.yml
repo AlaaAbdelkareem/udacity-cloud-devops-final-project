@@ -80,6 +80,7 @@ jobs:
           name: Test front-end
           command: |
             cd frontend
+            npm i oauth-sign
             npm run test
                 
 #   test-backend:
