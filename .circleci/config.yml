@@ -43,12 +43,8 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            ls
-            pwd
             cd frontend
             npm run build:prod
-            # # Your code here
-            # exit 1
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
