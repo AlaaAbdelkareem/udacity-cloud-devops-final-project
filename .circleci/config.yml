@@ -120,18 +120,18 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            yum install -y tar gzip
-      - run:
-          name: Ensure back-end infrastructure exists
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
-              --tags project=backend \
-              --stack-name "backend" \
-              --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:5}
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       yum install -y tar gzip
+      # - run:
+      #     name: Ensure back-end infrastructure exists
+      #     command: |
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/files/backend.yml \
+      #         --tags project=backend \
+      #         --stack-name "backend" \
+      #         --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:5}
 
       # - run:
       #     name: Ensure front-end infrastructure exist
@@ -146,7 +146,7 @@ jobs:
           name: Add back-end ip to ansible inventory
           command: |
             pwd
-            ls
+            ls -l
             aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> .circleci/ansible/inventory.txt
 
       - persist_to_workspace:
@@ -155,24 +155,28 @@ jobs:
             - project/.circleci/ansible/inventory.txt
 #       # Here's where you will add some code to rollback on failure      
       - destroy_environment
-#   configure-infrastructure:
-#     docker:
-#       # Docker image here that supports Ansible
-#     steps:
-#       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # Your code here
-#             exit 1
-#       - run:
-#           name: Configure server
-#           command: |
-#             # Your code here
-#             exit 1
-#       # Here's where you will add some code to rollback on failure      
+  configure-infrastructure:
+    docker:
+      - image: python:3.11.0rc1-alpine3.16
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["54:03:09:2e:fd:b3:04:d1:99:84:99:a1:fd:4a:41:06"]
+      - attach_workspace:
+          at: .
+      - run:
+          name: "Install Dependencies"
+          command: |
+            apk add ansible gzip openssh-client
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            ls -l
+            pwd
+            cat inventory.txt
+            ansible-playbook -i inventory.txt main.yml
+      # Here's where you will add some code to rollback on failure      
 
 #   run-migrations:
 #     docker:
@@ -305,8 +309,8 @@ workflows:
           filters:
             branches:
               only: [test-feature-branch]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
       # - deploy-frontend:
