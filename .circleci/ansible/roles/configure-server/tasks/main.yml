@@ -88,8 +88,8 @@
     src: /root/project/util/docker-compose.yml
     dest: /home/ubuntu/
 
-# - name: Run PostgresQL DB
-#   become: True
-#   shell:
-#     cmd: "ls;pwd;docker-compose -f ../util/docker-compose.yml up -d"
-#     chdir: .
+- name: Run PostgresQL DB
+  become: True
+  shell:
+    cmd: "docker-compose -f docker-compose.yml up -d"
+    chdir: .
