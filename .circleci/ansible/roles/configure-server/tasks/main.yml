@@ -87,5 +87,5 @@
 - name: Run PostgresQL DB
   become: True
   shell:
-    cmd: "docker-compose -f ../util/docker-compose.yml up -d"
+    cmd: "ls;pwd;docker-compose -f ../util/docker-compose.yml up -d"
     chdir: .
