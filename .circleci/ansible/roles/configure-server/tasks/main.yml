@@ -85,8 +85,8 @@
     mode: 'u+x,g+x,o+x'
 
 - copy:
-    src: ../util/docker-compose.yml
-    dest: /home/ubuntu
+    src: /root/project/util/docker-compose.yml
+    dest: /home/ubuntu/
 
 # - name: Run PostgresQL DB
 #   become: True
