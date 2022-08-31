@@ -171,11 +171,9 @@ jobs:
       - run:
           name: Configure server
           command: |
-            ls -la
-            pwd
             cd .circleci/ansible
             cat inventory.txt
-            ansible-playbook -i inventory.txt confure-server.yml
+            ansible-playbook -i inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure      
 
 #   run-migrations:
