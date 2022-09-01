@@ -213,12 +213,8 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
 
-            # Simple export
-            export API_URL=http://$BACKEND_PUBLIC_IP:3030
-            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > frontend/.env
-
-
             # Build the frontend
+            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             cd frontend
             npm install
             npm run build:prod
