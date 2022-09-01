@@ -206,11 +206,8 @@ jobs:
       - run:
           name: Deploy Frontend
           command: |
-            export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances
-              --filters "Name=tag:Name,Values=backend"
-              --query 'Reservations[*].Instances[*].PublicIpAddress'
-              --output text)
-            echo $BACKEND_PUBLIC_IP
+            export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" 
             # Build the frontend
             cd frontend
             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
