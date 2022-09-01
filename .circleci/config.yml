@@ -212,7 +212,9 @@ jobs:
               --filters "Name=tag:Name,Values=backend-<IDENTIFIER>" \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
-
+      - run:
+          name: Deploy Frontend
+          command: |
             # Build the frontend
             cd frontend
             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
