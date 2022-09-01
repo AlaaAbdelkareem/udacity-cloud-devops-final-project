@@ -206,7 +206,7 @@ jobs:
       - run:
           name: Deploy Frontend
           command: |
-            BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
+            export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
               --filters "Name=tag:Name,Values=backend-<IDENTIFIER>" \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
