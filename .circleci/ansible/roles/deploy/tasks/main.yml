@@ -4,7 +4,7 @@
     state: directory
 
 - copy:
-    src: ~/project/backend/artifact.tar.gz
+    src: .
     dest: /home/ubuntu/backend
 
 - name: Extract artifact.tar.gz to EC2 
