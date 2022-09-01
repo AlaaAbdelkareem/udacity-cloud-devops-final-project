@@ -215,6 +215,8 @@ jobs:
 
             # Simple export
             export API_URL=http://$BACKEND_PUBLIC_IP:3030
+            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > frontend/.env
+
 
             # Build the frontend
             cd frontend
