@@ -217,6 +217,7 @@ jobs:
             cd frontend
             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             npm install
+            npm install --save-dev webpack
             npm run build:prod
             aws s3 sync dist s3://udapeople-project
 #       # Here's where you will add some code to rollback on failure      
