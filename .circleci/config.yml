@@ -214,8 +214,8 @@ jobs:
               --output text)
 
             # Build the frontend
-            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             cd frontend
+            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             npm install
             npm run build:prod
             aws s3 sync dist s3://udapeople-project
