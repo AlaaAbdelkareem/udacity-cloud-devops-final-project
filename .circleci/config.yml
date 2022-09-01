@@ -67,16 +67,16 @@ jobs:
   # test-frontend:
   #   docker:
   #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys: [frontend-build]
-  #     - run:
-  #         name: Test front-end
-  #         command: |
-  #           cd frontend
-  #           npm i oauth-sign
-  #           npm run test
+    # steps:
+    #   - checkout
+    #   - restore_cache:
+    #       keys: [frontend-build]
+    #   - run:
+    #       name: Test front-end
+    #       command: |
+    #         cd frontend
+    #         npm i oauth-sign
+    #         npm run test
                 
   # test-backend:
   #   docker:
@@ -239,6 +239,7 @@ jobs:
             echo $TYPEORM_HOST >> .circleci/ansible/inventory.txt
 
             cd backend
+            npm i
             npm run build
             tar -czf artifact.tar.gz dist/* package*
 
