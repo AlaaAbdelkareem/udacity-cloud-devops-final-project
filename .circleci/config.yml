@@ -243,23 +243,24 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
 
-#   smoke-test:
-#     docker:
-#       # Lightweight Docker image 
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Get backend url
-#           command: |
-#             # your code here
-#       - run:
-#           name: Backend smoke test.
-#           command: |
-#             # your code here
+  smoke-test:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      # - checkout
+      - run:
+          name: Backend smoke test.
+          command: |
+            export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            URL="http://$BACKEND_PUBLIC_IP:3030/api/status"
+            if curl -s --head ${URL}
+            then
+              echo "It worked!"
+              return 0  #this one make the workflow fail i think bec. python not installed
+            else
+              echo "Rolling Back"
+              return 1
+            fi
 #       - run:
 #           name: Frontend smoke test.
 #           command: |
@@ -325,9 +326,9 @@ workflows:
       #     requires: [configure-infrastructure]
       # - deploy-frontend
           # requires: [run-migrations]
-      - deploy-backend
+      # - deploy-backend
       #     requires: [run-migrations]
-      # - smoke-test:
+      - smoke-test
       #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
