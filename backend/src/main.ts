@@ -45,7 +45,7 @@ async function bootstrap() {
       }
     },
   };
-  app.use(cors({  "origin": "*", "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS","preflightContinue": false, "optionsSuccessStatus": 204}));
+  app.use(cors({  "origin": ["*", "localhost:3030", "udapeople-project.s3.amazonaws.com"], "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"}));
   app.useGlobalFilters(new ErrorFilter());
   await app.listen(config.PORT);
   logger.log(`Listening on port ${config.PORT}.`);
