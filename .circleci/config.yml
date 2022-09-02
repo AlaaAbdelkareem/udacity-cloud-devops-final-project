@@ -233,6 +233,8 @@ jobs:
 
             cd backend
             npm i
+            export CORS_WHITELIST=udapeople-project.s3.amazonaws.com
+            echo "CORS_WHITELIST=udapeople-project.s3.amazonaws.com" >> .env
             npm run build
             tar -czf artifact.tar.gz dist/* package*
             cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/artifact.tar.gz
@@ -321,9 +323,9 @@ workflows:
       #     requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
-      - deploy-frontend
+      # - deploy-frontend
           # requires: [run-migrations]
-      # - deploy-backend
+      - deploy-backend
       #     requires: [run-migrations]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
