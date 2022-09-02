@@ -16,13 +16,13 @@ commands:
       steps:
         - slack/notify:
             event: fail
-            channel: $SLACK_DEFAULT_CHANNEL
+            channel: 'dev-null'
             template: basic_fail_1
   notify_on_success:
       steps:
         - slack/notify:
             event: pass
-            channel: $SLACK_DEFAULT_CHANNEL
+            channel: 'dev-null'
             template: success_tagged_deployment_1
 
 
