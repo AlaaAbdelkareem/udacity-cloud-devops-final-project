@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs: 
+    slack: circleci/slack@4.10.1
+
 commands:
   destroy_environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -9,6 +12,21 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name backend-${CIRCLE_WORKFLOW_ID:0:5}
+    notify_on_failure:
+        steps:
+        - slack/notify:
+            event: fail
+            channel: $SLACK_DEFAULT_CHANNEL
+            template: basic_fail_1
+    notify_on_success:
+        docker:
+        - image: cimg/base:stable
+        steps:
+        - slack/notify:
+            event: pass
+            channel: $SLACK_DEFAULT_CHANNEL
+            template: success_tagged_deployment_1
+
 
 #   revert-migrations:
 #     description: Revert the last migration if successfully run in the current workflow.
@@ -261,6 +279,7 @@ jobs:
               echo "Rolling Back"
               exit 1
             fi
+      - notify_on_failure
 #       - run:
 #           name: Frontend smoke test.
 #           command: |
