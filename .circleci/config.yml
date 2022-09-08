@@ -348,26 +348,26 @@ workflows:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
-      - deploy-infrastructure
+      # - deploy-infrastructure
       #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
       #       branches:
       #         only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [deploy-infrastructure]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [deploy-infrastructure]
           # requires: [run-migrations]
-      # - deploy-backend
-      #     requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
       # - smoke-test:
       #     requires: [deploy-frontend]
           # requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update
-      - cloudfront-update:
-          requires: [deploy-infrastructure]
+      # - cloudfront-update:
+      #     requires: [deploy-infrastructure]
           # requires: [smoke-test]
       # - cleanup:
       #     requires: [cloudfront-update]
