@@ -102,42 +102,42 @@ jobs:
             npm i oauth-sign
             npm run test
                 
-  # test-backend:
-  #   docker:
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys: [backend-build]
-  #     - run:
-  #         name: Test Back-end
-  #         command: |
-  #           cd backend
-  #           npm run test
+  test-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Test Back-end
+          command: |
+            cd backend
+            npm run test
             
-  # scan-frontend:
-  #   docker:
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys: [frontend-build]
-  #     - run:
-  #         name: Scan front-end
-  #         command: |
-  #           npm audit
+  scan-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Scan front-end
+          command: |
+            npm audit
 
-  # scan-backend:
-  #   docker:
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys: [backend-build]
-  #     - run:
-  #         name: Scan Back-end
-  #         command: |
-  #           npm audit
+  scan-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Scan Back-end
+          command: |
+            npm audit
 
   deploy-infrastructure:
     docker:
