@@ -83,7 +83,6 @@ jobs:
       - run:
           name: Back-end build
           command: |
-            exit 0
             cd backend
             npm install
             npm run build
