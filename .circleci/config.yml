@@ -101,9 +101,8 @@ jobs:
       - run:
           name: Test front-end
           command: |
-            exit 0
             cd frontend
-            npm i oauth-sign
+            # npm i oauth-sign
             npm run test
                 
   test-backend:
