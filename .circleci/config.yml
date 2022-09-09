@@ -154,14 +154,14 @@ jobs:
           name: Install dependencies
           command: |
             yum install -y tar gzip
-      - run:
-          name: Ensure back-end infrastructure exists
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
-              --tags project=udapeople \
-              --stack-name "backend" \
-              --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:5}
+      # - run:
+      #     name: Ensure back-end infrastructure exists
+      #     command: |
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/files/backend.yml \
+      #         --tags project=udapeople \
+      #         --stack-name "backend" \
+      #         --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:5}
 
       - run:
           name: Ensure front-end infrastructure exist
@@ -348,7 +348,7 @@ workflows:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
-      # - deploy-infrastructure
+      - deploy-infrastructure
       #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
       #       branches:
@@ -357,17 +357,17 @@ workflows:
       #     requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [deploy-infrastructure]
+      - deploy-frontend:
+          requires: [deploy-infrastructure]
           # requires: [run-migrations]
-      - deploy-backend
+      # - deploy-backend
           # requires: [run-migrations]
       # - smoke-test:
       #     requires: [deploy-frontend]
           # requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update
-      # - cloudfront-update:
-      #     requires: [deploy-infrastructure]
+      - cloudfront-update:
+          requires: [deploy-infrastructure]
           # requires: [smoke-test]
       # - cleanup:
       #     requires: [cloudfront-update]
